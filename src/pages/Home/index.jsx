@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import "./style.css"
 import Trash from "../../assets/Trash.svg"
 
@@ -9,7 +9,10 @@ function Home() {
 
 
   async function getUsers() {
-     users = await api.get('/usuarios')
+     const usersFromApi = await api.get('/usuarios')
+
+     users = usersFromApi.data
+     
   }
 
   // tudo que estiver dentro do useEffect será executado quando a pagina for carregada
