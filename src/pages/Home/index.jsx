@@ -1,27 +1,21 @@
+import { useEffect } from "react"
 import "./style.css"
 import Trash from "../../assets/Trash.svg"
 
+import api from "../../services/api"
+
 function Home() {
-  const users = [
-    {
-      id: "23423dsfgg",
-      name: "Andre",
-      age: 25,
-      email: "andre@gmail.com",
-    },
-    {
-      id: "2waf321",
-      name: "Wagner",
-      age: 62,
-      email: "wagner@gmail.com",
-    },
-    {
-      id: "ghfgh",
-      name: "Arthur",
-      age: 20,
-      email: "arthur@gmail.com",
-    },
-  ]
+  let users = []
+
+
+  async function getUsers() {
+     users = await api.get('/usuarios')
+  }
+
+  // tudo que estiver dentro do useEffect será executado quando a pagina for carregada
+  useEffect(() => {
+    getUsers()
+  }, [])
 
   return (
     <div className="container">
