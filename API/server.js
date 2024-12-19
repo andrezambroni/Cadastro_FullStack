@@ -34,7 +34,7 @@ app.get("/usuarios", async (req, res) => {
       },
     })
   } else {
-    const users = await prisma.user.findMany()
+    users = await prisma.user.findMany()
   }
 
   res.status(200).json(users)
@@ -67,5 +67,4 @@ app.delete("/usuarios/:id", async (req, res) => {
 
 app.listen(3000)
 
-// andrezambroni
-// zrI6HbEDB3Vvvsq5
+

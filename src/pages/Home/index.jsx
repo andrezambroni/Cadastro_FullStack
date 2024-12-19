@@ -1,11 +1,10 @@
-import { useEffect, useState, useRef} from "react"
+import { useEffect, useState, useRef } from "react"
 import "./style.css"
 import Trash from "../../assets/Trash.svg"
 
 import api from "../../services/api"
 
 function Home() {
-
   const [users, setUsers] = useState([])
 
   const inputName = useRef()
@@ -16,12 +15,22 @@ function Home() {
     const usersFromApi = await api.get("/usuarios")
 
     setUsers(usersFromApi.data)
+    getUsers()
   }
 
-  async function createUsers(){
-    //const usersFromApi = await api.get("/usuarios")
+  async function createUsers() {
+    await api.post("/usuarios", {
+      name: inputName.current.value,
+      age: inputAge.current.value,
+      email: inputEmail.current.value,
+    })
 
-   console.log (inputName)
+    getUsers()
+  }
+
+  async function deleteUsers(id) {
+    await api.delete(`/usuarios/${id}`)
+    getUsers()
   }
 
   // tudo que estiver dentro do useEffect será executado quando a pagina for carregada
@@ -37,7 +46,9 @@ function Home() {
         <input name="idade" type="text" placeholder="Idade" ref={inputAge} />
         <input name="email" type="text" placeholder="Email" ref={inputEmail} />
 
-        <button type="button" onClick={createUsers}>Cadastrar</button>
+        <button type="button" onClick={createUsers}>
+          Cadastrar
+        </button>
       </form>
 
       {users.map((user) => (
@@ -54,7 +65,7 @@ function Home() {
             </p>
           </div>
 
-          <button>
+          <button onClick={deleteUsers(user.id)}>
             <img src={Trash} />
           </button>
         </div>
