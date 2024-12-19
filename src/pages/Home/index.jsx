@@ -1,18 +1,27 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef} from "react"
 import "./style.css"
 import Trash from "../../assets/Trash.svg"
 
 import api from "../../services/api"
 
 function Home() {
-  let users = []
 
+  const [users, setUsers] = useState([])
+
+  const inputName = useRef()
+  const inputAge = useRef()
+  const inputEmail = useRef()
 
   async function getUsers() {
-     const usersFromApi = await api.get('/usuarios')
+    const usersFromApi = await api.get("/usuarios")
 
-     users = usersFromApi.data
-     
+    setUsers(usersFromApi.data)
+  }
+
+  async function createUsers(){
+    //const usersFromApi = await api.get("/usuarios")
+
+   console.log (inputName)
   }
 
   // tudo que estiver dentro do useEffect será executado quando a pagina for carregada
@@ -24,11 +33,11 @@ function Home() {
     <div className="container">
       <form>
         <h1>Cadastro de Usuários</h1>
-        <input name="nome" type="text" placeholder="Nome" />
-        <input name="idade" type="text" placeholder="Idade" />
-        <input name="email" type="text" placeholder="Email" />
+        <input name="nome" type="text" placeholder="Nome" ref={inputName} />
+        <input name="idade" type="text" placeholder="Idade" ref={inputAge} />
+        <input name="email" type="text" placeholder="Email" ref={inputEmail} />
 
-        <button type="button">Cadastrar</button>
+        <button type="button" onClick={createUsers}>Cadastrar</button>
       </form>
 
       {users.map((user) => (
